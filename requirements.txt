@@ -1,0 +1,9 @@
+# --- Web app (milestone 1) ---
+fastapi          # Web framework used to build the API
+uvicorn          # Server that runs the FastAPI app
+python-dotenv    # Loads .env values (PayPal sandbox keys arrive in a later milestone)
+requests         # HTTP client used by later milestones and manual smoke tests
+
+# --- Tests (milestone 1) ---
+pytest           # Test runner
+httpx2           # HTTP transport required by FastAPI's TestClient
