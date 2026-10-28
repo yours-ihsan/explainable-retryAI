@@ -23,10 +23,11 @@ Every response is clearly labelled as a simulation.
 import sqlite3
 from contextlib import asynccontextmanager
 from decimal import Decimal, InvalidOperation
-from typing import Optional
+from typing import Any, Optional
 
 from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.exceptions import RequestValidationError
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field, field_validator
 from starlette.exceptions import HTTPException as StarletteHTTPException
@@ -66,6 +67,15 @@ app = FastAPI(
         "no real PayPal integration and no LLM yet."
     ),
     lifespan=lifespan,
+)
+
+# Allow the browser UI (React/Vite dev server) to call this API.
+# Without this, the browser blocks requests from localhost:5173 to localhost:8000.
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 
